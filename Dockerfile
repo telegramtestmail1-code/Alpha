@@ -1,10 +1,11 @@
-FROM debian:latest
+FROM python:3.11-slim
 
-RUN apt update && apt upgrade -y
-RUN apt install git curl python3-pip -y
-RUN pip3 install -U pip
-RUN mkdir /app/
-WORKDIR /app/
-COPY . /app/
-RUN pip3 install -U -r requirements.txt
-CMD python3 main.py
+WORKDIR /app
+
+COPY requirements.txt .
+
+RUN python -m pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+CMD ["python", "main.py"]
